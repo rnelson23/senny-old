@@ -1,0 +1,24 @@
+import discord
+from discord.ext import commands
+
+bot = commands.Bot(command_prefix=commands.when_mentioned_or('s?'))
+
+cogs = ['cogs.fun',
+        'cogs.mod',
+        'cogs.admin',
+        'cogs.owner',
+        'cogs.utility']
+
+@bot.event
+async def on_ready():
+    game = discord.Game("s?help")
+    await bot.change_presence(activity=game)
+    
+    print(f'{bot.user.name} is ready!')
+
+    for cog in cogs:
+        bot.load_extension(cog)
+
+    return
+
+bot.run('token')

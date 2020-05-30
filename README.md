@@ -62,3 +62,4 @@ The bot handles command permissions via discord permissions. For example, you ca
 
 ## Contact:
 If you need more help, join my Discord server: https://discord.gg/4hbDbqd
+My Discord username is Ellie#0080

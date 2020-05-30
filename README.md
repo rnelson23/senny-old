@@ -40,6 +40,7 @@ Senny is a personal project of mine I started because I was bored. It just has c
 
 ### Utillity:
 >#### <kbd>s!avatar</kbd>           : Gets a user's avatar.
+>#### <kbd>s!disboard</kbd>         : Reminds to bump.
 >#### <kbd>s!jumbo</kbd>            : Gets an emote's image.
 >#### <kbd>s!ping</kbd>             : Check pingtime.
 >#### <kbd>s!remind</kbd>           : Reminds a user/channel.

@@ -30,6 +30,14 @@ class UtiCog(commands.Cog, name='Utillity Commands'):
             resultf = round((num * (9/5)) + 32)
             await ctx.send(f'**{num}°C** is **{resultf}°F**')
 
+    @commands.command()
+    async def disboard(self, ctx):
+        """Reminds to bump."""
+
+        await ctx.send(f"Alright, {ctx.author.mention}, I'll remind you to **bump** in 2 hours!")
+        await asyncio.sleep(7200)
+        await ctx.send(f'Hey, {ctx.author.mention}, you asked me to remind you 2 hours ago to **bump**!')
+
     @commands.command(aliases= ['rmd'])
     async def remind(self, ctx, arg, time=None, *, reason=None):
         """Reminds a user/channel."""
@@ -79,7 +87,7 @@ class UtiCog(commands.Cog, name='Utillity Commands'):
 
             await ctx.send(f"Alright, {user.mention}, I'll remind you about **{reason}** in {duration2}!")
             await asyncio.sleep(duration)
-            await channel2.send(f"{duration2} ago, you asked me to remind you about **{reason}**! Here I am!")
+            await channel2.send(f"Hey, {user.mention}, you asked me to remind you {duration2} ago about **{reason}**!")
 
         elif arg == 'here':
 
@@ -88,7 +96,7 @@ class UtiCog(commands.Cog, name='Utillity Commands'):
 
             await ctx.send(f"Alright, {user.mention}, I'll remind {channel.mention} about **{reason}** in {duration2}!")
             await asyncio.sleep(duration)
-            await channel.send(f"{duration2} ago, you asked me to remind {channel.mention} about **{reason}**! Here I am!")
+            await channel.send(f"Hey, you asked me to remind {channel.mention} {duration2} ago about **{reason}**!")
             return
 
     @commands.command()

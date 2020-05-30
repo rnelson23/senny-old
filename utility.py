@@ -1,7 +1,5 @@
 import discord
 import asyncio
-import datetime
-import math
 from discord.ext import commands
 from datetime import datetime as d
 
@@ -13,7 +11,7 @@ class UtiCog(commands.Cog, name='Utillity Commands'):
 
     @commands.command()
     async def ping(self, ctx):
-        """Gives the bot's ping"""
+        """Check pingtime."""
 
         start = d.timestamp(d.now())
         msg = await ctx.send(content='Pinging')
@@ -22,7 +20,7 @@ class UtiCog(commands.Cog, name='Utillity Commands'):
 
     @commands.command()
     async def temp(self, ctx, num: int, unit: str):
-        """Converts between F and C"""
+        """Converts temp units."""
 
         if unit == 'F':
             resultc = round((num - 32) * (5/9))
@@ -32,9 +30,70 @@ class UtiCog(commands.Cog, name='Utillity Commands'):
             resultf = round((num * (9/5)) + 32)
             await ctx.send(f'**{num}°C** is **{resultf}°F**')
 
+    @commands.command(aliases= ['rmd'])
+    async def remind(self, ctx, arg, time=None, *, reason=None):
+        """Reminds a user/channel."""
+
+        converter = (time[-1])
+        amount2 = (time[:-1])
+
+        def amount(self, time):
+            try:
+                return int(time[:-1])
+            except:
+                return time
+
+        if converter == "s":
+            duration = (amount(self, time) * 1)
+            if amount2 == '1':
+                duration2 = f'{amount2} second'
+            elif amount2 != '1':
+                duration2 = f'{amount2} seconds'
+
+
+        if converter == 'm':
+            duration = (amount(self, time) * 60)
+            if amount2 == '1':
+                duration2 = f'{amount2} minute'
+            elif amount2 != '1':
+                duration2 = f'{amount2} minutes'
+
+        if converter == 'h':
+            duration = (amount(self, time) * 3600)
+            if amount2 == '1':
+                duration2 = f'{amount2} hour'
+            elif amount2 != '1':
+                duration2 = f'{amount2} hours'
+
+        if converter == 'd':
+            duration = (amount(self, time) * 86400)
+            if amount2 == '1':
+                duration2 = f'{amount2} day'
+            elif amount2 != '1':
+                duration2 = f'{amount2} days'
+
+        if arg == 'me':
+            
+            user = ctx.author
+            channel2 = await user.create_dm()
+
+            await ctx.send(f"Alright, {user.mention}, I'll remind you about **{reason}** in {duration2}!")
+            await asyncio.sleep(duration)
+            await channel2.send(f"{duration2} ago, you asked me to remind you about **{reason}**! Here I am!")
+
+        elif arg == 'here':
+
+            user = ctx.author
+            channel = ctx.channel
+
+            await ctx.send(f"Alright, {user.mention}, I'll remind {channel.mention} about **{reason}** in {duration2}!")
+            await asyncio.sleep(duration)
+            await channel.send(f"{duration2} ago, you asked me to remind {channel.mention} about **{reason}**! Here I am!")
+            return
+
     @commands.command()
     async def jumbo(self, ctx, emoji: discord.PartialEmoji):
-        """Gives an emote's image"""
+        """Gets an emote's image."""
 
         embed = discord.Embed(color=0x3a86ff, timestamp=ctx.message.created_at)
 
@@ -44,9 +103,9 @@ class UtiCog(commands.Cog, name='Utillity Commands'):
 
         await ctx.send(embed=embed)
 
-    @commands.command()
+    @commands.command(aliases=['av'])
     async def avatar(self, ctx, user: discord.User=None):
-        """Displays a user's avatar"""
+        """Gets a user's avatar."""
 
         if user is None:
             user = ctx.author
@@ -68,9 +127,9 @@ class UtiCog(commands.Cog, name='Utillity Commands'):
 
             await ctx.send(embed=embed)
 
-    @commands.command()
+    @commands.command(aliases=['user'])
     async def userinfo(self, ctx, user: discord.Member=None):
-        """Displays a user's information."""
+        """Shows user info."""
 
         if user is None:
             user = ctx.author
@@ -78,6 +137,10 @@ class UtiCog(commands.Cog, name='Utillity Commands'):
             roles = user.roles
             roles = [role.mention for role in roles if role.name != '@everyone']
             roles.reverse()
+
+            join_position = sorted(ctx.guild.members, key=lambda m: m.joined_at).index(user) + 1
+
+            status = "Web: " + str(user.web_status) + "\nDesktop: " + str(user.desktop_status) + "\nMobile: " + str(user.mobile_status)
 
             perms = iter(ctx.channel.permissions_for(user))
             perms_we_have = ""
@@ -92,7 +155,6 @@ class UtiCog(commands.Cog, name='Utillity Commands'):
 
             for activity in user.activities:
 
-                # Type 4 is custom status, ignore
                 if activity.type == discord.ActivityType.custom:
                     if activity.emoji is None:
                         emoji = ''
@@ -129,11 +191,6 @@ class UtiCog(commands.Cog, name='Utillity Commands'):
                     else:
                         message += f"• Listening to **{activity.name}**\n"
 
-            if user.is_on_mobile() == True:
-                status = f'{user.status} on mobile'
-            else:
-                status = f'{user.status} on desktop'
-
             if user.premium_since is None:
                 booster = 'No'
             else:
@@ -145,7 +202,8 @@ class UtiCog(commands.Cog, name='Utillity Commands'):
             embed.set_thumbnail(url=user.avatar_url)
             embed.set_author(name=f'{user} ~ {user.display_name}', url=user.avatar_url)
             embed.add_field(name='Joined Discord on', value=user.created_at.__format__('%B %d, %Y @ %H:%M'), inline=False)
-            embed.add_field(name='Joined this server on', value=user.joined_at.__format__('%B %d, %Y @ %H:%M'), inline=False)
+            embed.add_field(name='Joined server on', value=user.joined_at.__format__('%B %d, %Y @ %H:%M'), inline=False)
+            embed.add_field(name='Join Position', value=join_position, inline=False)
             embed.add_field(name='Status', value=status, inline=False)
             embed.add_field(name='Activity', value=message, inline=False)
             embed.add_field(name='Is Bot?', value=user.bot, inline=False)
@@ -162,6 +220,10 @@ class UtiCog(commands.Cog, name='Utillity Commands'):
             roles = [role.mention for role in roles if role.name != '@everyone']
             roles.reverse()
 
+            join_position = sorted(ctx.guild.members, key=lambda m: m.joined_at).index(user) + 1
+
+            status = "Web: " + str(user.web_status) + "\nDesktop: " + str(user.desktop_status) + "\nMobile: " + str(user.mobile_status)
+
             perms = iter(ctx.channel.permissions_for(user))
             perms_we_have = ""
             for x in perms:
@@ -175,7 +237,6 @@ class UtiCog(commands.Cog, name='Utillity Commands'):
 
             for activity in user.activities:
 
-                # Type 4 is custom status, ignore
                 if activity.type == discord.ActivityType.custom:
                     if activity.emoji is None:
                         emoji = ''
@@ -212,11 +273,6 @@ class UtiCog(commands.Cog, name='Utillity Commands'):
                     else:
                         message += f"• Listening to **{activity.name}**\n"
 
-            if user.is_on_mobile() == True:
-                status = f'{user.status} on mobile'
-            else:
-                status = f'{user.status} on desktop'
-
             if user.premium_since is None:
                 booster = 'No'
             else:
@@ -229,6 +285,7 @@ class UtiCog(commands.Cog, name='Utillity Commands'):
             embed.set_author(name=f'{user} ~ {user.display_name}', url=user.avatar_url)
             embed.add_field(name='Joined Discord on', value=user.created_at.__format__('%B %d, %Y @ %H:%M'), inline=False)
             embed.add_field(name='Joined this server on', value=user.joined_at.__format__('%B %d, %Y @ %H:%M'), inline=False)
+            embed.add_field(name='Join Position', value=join_position, inline=False)
             embed.add_field(name='Status', value=status, inline=False)
             embed.add_field(name='Activity', value=message, inline=False)
             embed.add_field(name='Is Bot?', value=user.bot, inline=False)
@@ -240,9 +297,9 @@ class UtiCog(commands.Cog, name='Utillity Commands'):
             
             await ctx.send(embed=embed)
 
-    @commands.command()
+    @commands.command(aliases=['server'])
     async def serverinfo(self, ctx):
-        """Displays server information."""
+        """Shows server info."""
 
         embed = discord.Embed(color = 0x3a86ff, timestamp=ctx.message.created_at)
 
@@ -250,7 +307,7 @@ class UtiCog(commands.Cog, name='Utillity Commands'):
         embed.set_thumbnail(url=ctx.author.guild.icon_url)
         embed.set_image(url=ctx.author.guild.splash_url)
         embed.add_field(name='Owner', value=f'{ctx.author.guild.owner}', inline=False)
-        embed.add_field(name='Created on', value=ctx.author.guild.created_at.__format__('%B %d, %Y at %H:%M'), inline=False)
+        embed.add_field(name='Created on', value=ctx.author.guild.created_at.__format__('%B %d, %Y @ %H:%M'), inline=False)
         embed.add_field(name='Total Member Count', value=f'{len(list(ctx.author.guild.members))} Members', inline=False)
         embed.add_field(name='Total Nitro Boosters', value=f'{ctx.author.guild.premium_subscription_count} Boosters', inline=False)
         embed.add_field(name='Channels', value=f'{len(list(ctx.author.guild.text_channels))} Text Channels')
@@ -265,40 +322,26 @@ class UtiCog(commands.Cog, name='Utillity Commands'):
 
     @commands.command()
     async def roleinfo(self, ctx, *, role: discord.Role):
-        """Displays role information."""
+        """Shows role info."""
         
-        embed = discord.Embed(timestamp=ctx.message.created_at, color = role.color)
+        embed = discord.Embed(color=0x3a86ff, timestamp=ctx.message.created_at)
 
-        embed.set_author(name=f'Role Info - {role.name}', url=ctx.author.avatar_url)
-        embed.add_field(name='Role ID:', value=role.id, inline=False)
-        embed.add_field(name='Role Creation Date:', value=role.created_at.__format__('%b %d %Y %H:%M'), inline=False)
-        embed.add_field(name='Role Position Integer:', value=role.position, inline=False)
-        embed.add_field(name='Mentionable?:', value=role.mentionable, inline=False)
-        embed.add_field(name='Role Hoist:', value=role.hoist, inline=False)
-        embed.add_field(name='Role Color:', value=role.color, inline=False)
-        embed.add_field(name='Role Members:', value=f'{len(list(role.members))}', inline=False)
-        embed.set_footer(text=f'Requested by {ctx.author}', icon_url=ctx.author.avatar_url)
-
-        await ctx.send(embed=embed)
-
-    @commands.guild_only()
-    @commands.command()
-    @commands.has_permissions(manage_guild=True)
-    async def perms(self, ctx, user: discord.Member = None):
-        """Fetch a specific user's permissions."""
-
-        if user is None:
-            user = ctx.author
-
-        perms = iter(ctx.channel.permissions_for(user))
-        perms_we_have = ""
-        perms_we_dont = ""
+        perms = iter(role.permissions)
+        message = "none\n"
         for x in perms:
             if "True" in str(x):
-                perms_we_have += "+\t{0}\n".format(str(x).split("'")[1])
-            else:
-                perms_we_dont += "-\t{0}\n".format(str(x).split("'")[1])
-        await ctx.send(f'```diff\n{perms_we_have}{perms_we_dont}```')
+                message += "{0}\n".format(str(x).split("'")[1])
+
+        embed.set_author(name=f'Role Info - {role.name}')
+        embed.add_field(name='Created on', value=role.created_at.__format__('%B %d, %Y @ %H:%M'), inline=False)
+        embed.add_field(name='Mentionable?:', value=role.mentionable, inline=False)
+        embed.add_field(name='Hoisted?', value=role.hoist, inline=False)
+        embed.add_field(name='Color', value=role.color, inline=False)
+        embed.add_field(name='In role', value=f'{len(list(role.members))} members', inline=False)
+        embed.add_field(name='Permissions', value=f'{message}', inline=False)
+        embed.set_footer(text=f'Role ID: {role.id}')
+
+        await ctx.send(embed=embed)
 
 def setup(bot):
     bot.add_cog(UtiCog(bot))

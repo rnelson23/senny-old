@@ -7,60 +7,60 @@ class Fun(commands.Cog, name='Fun Commands'):
         self.bot = bot
         self._last_member = None
 
-    @commands.command()
-    async def hug(self, ctx, member: discord.Member=None):
-        """Hugs someone."""
+#    @commands.command()
+#    async def hug(self, ctx, member: discord.Member=None):
+#        """Hugs someone."""
 
-        end = ['adorable!',
-               'how cute!',
-               'awww!']
+#        end = ['adorable!',
+#               'how cute!',
+#               'awww!']
 
-        if member is None:
-            await ctx.send(f'Please provide a mention/ID!')
+#        if member is None:
+#            await ctx.send(f'Please provide a mention/ID!')
         
-        if member == ctx.author:
-            await ctx.send(f'Aww does someone need a hug?')
+#        if member == ctx.author:
+#            await ctx.send(f'Aww does someone need a hug?')
 
-        else:
-            await ctx.send(f'***{ctx.author.name}*** *hugs* ***{member.name},*** *{random.choice(end)}*')
+#        else:
+#            await ctx.send(f'***{ctx.author.name}*** *hugs* ***{member.name},*** *{random.choice(end)}*')
 
-    @commands.command()
-    async def pat(self, ctx, member: discord.Member):
-        """Pats someone."""
+#    @commands.command()
+#    async def pat(self, ctx, member: discord.Member):
+#        """Pats someone."""
 
-        end = ['adorable!',
-               'how cute!',
-               'awww!']
+#        end = ['adorable!',
+#               'how cute!',
+#               'awww!']
 
-        if member is None:
-            await ctx.send(f'Please provide a mention/ID!')
+#        if member is None:
+#            await ctx.send(f'Please provide a mention/ID!')
         
-        if member == ctx.author:
-            await ctx.send(f'Aww does someone need to be pat?')
+#        if member == ctx.author:
+#            await ctx.send(f'Aww does someone need to be pat?')
 
-        else:
-            await ctx.send(f'***{ctx.author.name}*** *pats* ***{member.name},*** *{random.choice(end)}*')
+#        else:
+#            await ctx.send(f'***{ctx.author.name}*** *pats* ***{member.name},*** *{random.choice(end)}*')
 
-    @commands.command()
-    async def cuddle(self, ctx, member: discord.Member):
-        """Cuddles someone."""
+#    @commands.command()
+#    async def cuddle(self, ctx, member: discord.Member):
+#        """Cuddles someone."""
 
-        end = ['adorable!',
-               'how cute!',
-               'awww!']
+#        end = ['adorable!',
+#               'how cute!',
+#               'awww!']
 
-        if member is None:
-            await ctx.send(f'Please provide a mention/ID!')
+#        if member is None:
+#            await ctx.send(f'Please provide a mention/ID!')
         
-        if member == ctx.author:
-            await ctx.send(f'Aww does someone need to be cuddled?')
+#        if member == ctx.author:
+#            await ctx.send(f'Aww does someone need to be cuddled?')
 
-        else:
-            await ctx.send(f'***{ctx.author.name}*** *cuddles* ***{member.name},*** *{random.choice(end)}*')
+#        else:
+#            await ctx.send(f'***{ctx.author.name}*** *cuddles* ***{member.name},*** *{random.choice(end)}*')
 
     @commands.command(description='For when you wanna settle the score some other way')
     async def choose(self, ctx, *choices: str):
-        """Chooses one option."""
+        """Chooses an option."""
 
         try:
             await ctx.send(random.choice(choices))
@@ -70,7 +70,7 @@ class Fun(commands.Cog, name='Fun Commands'):
 
     @commands.command()
     async def roll(self, ctx, dice : str):
-        """Rolls a dice in NdN format."""
+        """Rolls a dice."""
 
         try:
             rolls, limit = map(int, dice.split('d'))
@@ -110,44 +110,44 @@ class Fun(commands.Cog, name='Fun Commands'):
 
         await ctx.send(f'Question: {question}\nAnswer: {random.choice(responses)}')
 
-    @commands.command(name='add', aliases=['plus'])
-    @commands.guild_only()
-    async def do_addition(self, ctx, first: int, second: int):
-        """Adds two integer values."""
+#    @commands.command(name='add', aliases=['plus'])
+#    @commands.guild_only()
+#    async def do_addition(self, ctx, first: int, second: int):
+#        """Adds two integer values."""
 
-        total = first + second
+#        total = first + second
 
-        await ctx.send(f'The sum of **{first}** and **{second}** is **{total}**')
+#        await ctx.send(f'The sum of **{first}** and **{second}** is **{total}**')
 
-    @commands.command()
-    async def hello(self, ctx, *, member: discord.Member = None):
-        """Says hello."""
+#    @commands.command()
+#    async def hello(self, ctx, *, member: discord.Member = None):
+#        """Says hello."""
 
-        member = member or ctx.author
+#        member = member or ctx.author
 
-        if self._last_member is None or self._last_member.id != member.id:
-            await ctx.send('Hello {0.name}~'.format(member))
+#        if self._last_member is None or self._last_member.id != member.id:
+#            await ctx.send('Hello {0.name}~'.format(member))
 
-        else:
-            await ctx.send('Hello {0.name}... This feels familiar.'.format(member))
+#        else:
+#            await ctx.send('Hello {0.name}... This feels familiar.'.format(member))
 
-        self._last_member = member
+#        self._last_member = member
 
-    @commands.command(aliases=['thanks', 'thank you', 'Thank you', 'Thank', 'Thanks'], hidden=True)
-    async def thank(self, ctx):
+#    @commands.command(aliases=['thanks', 'thank you', 'Thank you', 'Thank', 'Thanks'], hidden=True)
+#    async def thank(self, ctx):
 
-        response = [f"You're welcome!",
-                    f'No problem!',
-                    f'My pleasure!',
-                    f'Glad I could help!',
-                    f"That's what I'm here for!"]
+#        response = [f"You're welcome!",
+#                    f'No problem!',
+#                    f'My pleasure!',
+#                    f'Glad I could help!',
+#                    f"That's what I'm here for!"]
 
-        await ctx.send(random.choice(response))
+#        await ctx.send(random.choice(response))
 
-    @commands.command(aliases=['Danke'], hidden=True)
-    async def danke(self, ctx):
+#    @commands.command(aliases=['Danke'], hidden=True)
+#    async def danke(self, ctx):
         
-        await ctx.send(f'Bitte!')
+#        await ctx.send(f'Bitte!')
 
 def setup(bot):
     bot.add_cog(Fun(bot))

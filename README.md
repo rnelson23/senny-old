@@ -1,11 +1,9 @@
 # Senny
 
 ## Important
-Senny is a private Discord bot with a bunch of random useful commands.
-### Notice
 The bot handles command permissions via discord permissions. For example, you can use any of the channel commands if you have the manage channels permission. In addition, the owner commands section does not work for anyone other than the bot owner, meaning they do funtion if you host the bot yourself.
 
-## Q&A:
+### Q&A:
 >### Q: What is Senny's purpose?
 >### A: Senny does not have a set purpose.
 

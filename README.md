@@ -1,17 +1,5 @@
 # Senny
-
-## Important
-The bot handles command permissions via discord permissions. For example, you can use any of the channel commands if you have the manage channels permission. In addition, the owner commands section does not work for anyone other than the bot owner, meaning they do funtion if you host the bot yourself.
-
-### Q&A:
->### Q: What is Senny's purpose?
->### A: Senny does not have a set purpose.
-
->### Q: Why did you make Senny then?
->### A: Initially I made Senny because I was bored but I continue to develop it as a personal bot to fuel my laziness.
-
->### Q: Can I add Senny to my server?
->### A: No you cannot, the bot itself is set to private meaning only I can add it. However you can run the code yourself.
+Senny is a personal project of mine I started because I was bored. It just has commands I find useful.
 
 ## Commands
 ### Administration:
@@ -59,7 +47,3 @@ The bot handles command permissions via discord permissions. For example, you ca
 >#### <kbd>s!serverinfo</kbd>       : Shows server info.
 >#### <kbd>s!temp</kbd>             : Converts temp units.
 >#### <kbd>s!userinfo</kbd>         : Shows user info.
-
-## Contact:
-If you need more help, join my Discord server: https://discord.gg/4hbDbqd
-My Discord username is Ellie#0080

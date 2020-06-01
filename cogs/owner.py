@@ -32,9 +32,10 @@ class Owner(commands.Cog, name="Owner Commands"):
 
     @commands.command()
     @commands.is_owner()
-    async def say(self, ctx, channel: discord.TextChannel, *, message):
+    async def say(self, ctx, channel_id, *, message):
         """Sends a message to a channel."""
-        
+
+        channel = await self.bot.fetch_channel(channel_id)
         await channel.send(f'{message}')
 
     @commands.command(description='Remember to use dot path. e.g: cogs.owner')

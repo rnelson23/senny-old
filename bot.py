@@ -7,6 +7,7 @@ cogs = ['cogs.fun',
         'cogs.mod',
         'cogs.admin',
         'cogs.owner',
+        'cogs.error',
         'cogs.utility']
 
 @bot.event
@@ -21,4 +22,4 @@ async def on_ready():
 
     return
 
-bot.run('token')
+bot.run('NjgxODY4MzYyNTk0MTIzODA2.XmpF7Q.eFGbPRPenQf3rRQk_Zi6eCe57yc')

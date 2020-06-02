@@ -1,79 +1,42 @@
 import discord
 from discord.ext import commands
-from discord.utils import get
-from discord.channel import TextChannel
 
-class Owner(commands.Cog, name="Owner Commands"):
+class owner(commands.Cog, name="Owner Commands"):
     def __init__(self, bot):
         self.bot = bot
 
-#    @commands.Cog.listener()
-#    async def on_command_error(self, ctx, error):
-
-#        if isinstance(error, commands.CommandNotFound):
-#            response = await ctx.send('That command does not exist!')
-#            await response.delete(delay=10)
-
-#        if isinstance(error, commands.MissingPermissions):
-#            response = await ctx.send('You do not have permission to use that command!')
-#            await response.delete(delay=10)
-
-#        if isinstance(error, commands.MissingRequiredArgument):
-#            response = await ctx.send('Please provide all required arguments!')
-#            await response.delete(delay=10)
-
-#        if isinstance(error, commands.NotOwner):
-#            response = await ctx.send('You do not own this bot!')
-#            await response.delete(delay=10)
-
-#        if isinstance(error, commands.BadArgument):
-#            response = await ctx.send('Please ensure there are no spelling errors and/or missing arguments!')
-#            await response.delete(delay=10)
-
     @commands.command()
     @commands.is_owner()
-    async def say(self, ctx, channel_id, *, message):
-        """Sends a message to a channel."""
+    async def say(self, ctx, id, *, message):
+        """Sends a message"""
 
-        channel = await self.bot.fetch_channel(channel_id)
+        channel = await self.bot.fetch_channel(id)
         await channel.send(f'{message}')
 
     @commands.command(description='Remember to use dot path. e.g: cogs.owner')
     @commands.is_owner()
-    async def load(self, ctx, *, cog: str):
-        """Loads a cog."""
+    async def load(self, ctx, cog):
+        """Loads a cog"""
 
-        try:
-            self.bot.load_extension(cog)
-            await ctx.send('Loaded {}'.format(cog))
-
-        except Exception as error:
-            await ctx.send('{} cannot be loaded. [{}]'.format(cog, error))
+        self.bot.load_extension(cog)
+        await ctx.send(f'Loaded {cog}')
 
     @commands.command(description='Remember to use dot path. e.g: cogs.owner')
     @commands.is_owner()
-    async def unload(self, ctx, *, cog: str):
-        """Unloads a cog."""
+    async def unload(self, ctx, cog):
+        """Unloads a cog"""
 
-        try:
-            self.bot.unload_extension(cog)
-            await ctx.send('Unloaded {}'.format(cog))
-
-        except Exception as error:
-            await ctx.send('{} cannot be unloaded. [{}]'.format(cog, error))
+        self.bot.unload_extension(cog)
+        await ctx.send(f'Unloaded {cog}')
 
     @commands.command(description='Remember to use dot path. e.g: cogs.owner')
     @commands.is_owner()
-    async def reload(self, ctx, *, cog: str):
-        """Reloads a cog."""
+    async def reload(self, ctx, cog):
+        """Reloads a cog"""
 
-        try:
-            self.bot.unload_extension(cog)
-            self.bot.load_extension(cog)
-            await ctx.send('Reloaded {}'.format(cog))
-            
-        except Exception as error:
-            await ctx.send('{} cannot be reloaded. [{}]'.format(cog, error))
+        self.bot.unload_extension(cog)
+        self.bot.load_extension(cog)
+        await ctx.send(f'Reloaded {cog}')
 
 def setup(bot):
-    bot.add_cog(Owner(bot))
+    bot.add_cog(owner(bot))

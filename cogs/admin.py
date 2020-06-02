@@ -1,14 +1,14 @@
 import discord
 from discord.ext import commands
 
-class Admin(commands.Cog, name='Administration Commands'):
+class admin(commands.Cog, name='Administration Commands'):
     def __init__(self, bot):
         self.bot = bot
 
     @commands.command(aliases=['er'])
     @commands.has_permissions(manage_roles=True)
     async def editrole(self, ctx, role, args, *, args2):
-        """Edits a role."""
+        """Edits a role"""
 
         role=discord.utils.get(ctx.guild.roles, name=f'{role}')
         
@@ -47,7 +47,7 @@ class Admin(commands.Cog, name='Administration Commands'):
     @commands.command(aliases=['cr'])
     @commands.has_permissions(manage_roles=True)
     async def createrole(self, ctx, *, name):
-        """Creates a role."""
+        """Creates a role"""
 
         await ctx.guild.create_role(name=name)
         await ctx.send(f'I created the role **{name}**!')
@@ -55,7 +55,7 @@ class Admin(commands.Cog, name='Administration Commands'):
     @commands.command(aliases=['dr'])
     @commands.has_permissions(manage_roles=True)
     async def deleterole(self, ctx, role: discord.Role):
-        """Deletes a role."""
+        """Deletes a role"""
 
         await role.delete()
         await ctx.send(f'I deleted the role **{role}**!')
@@ -63,7 +63,7 @@ class Admin(commands.Cog, name='Administration Commands'):
     @commands.command(aliases=['ct'])
     @commands.has_permissions(manage_channels=True)
     async def createtext(self, ctx, *, channel):
-        """Creates a text channel."""
+        """Creates a text channel"""
 
         await ctx.guild.create_text_channel(name=channel)
         await ctx.send(f'I created the text channel **{channel}**!')
@@ -71,7 +71,7 @@ class Admin(commands.Cog, name='Administration Commands'):
     @commands.command(aliases=['cv'])
     @commands.has_permissions(manage_channels=True)
     async def createvoice(self, ctx, *, channel):
-        """Creates a voice channel."""
+        """Creates a voice channel"""
 
         await ctx.guild.create_voice_channel(name=channel)
         await ctx.send(f'I created the voice channel **{channel}**!')
@@ -79,7 +79,7 @@ class Admin(commands.Cog, name='Administration Commands'):
     @commands.command(aliases=['cc'])
     @commands.has_permissions(manage_channels=True)
     async def createcategory(self, ctx, *, channel):
-        """Creates a category."""
+        """Creates a category"""
 
         await ctx.guild.create_category_channel(name=channel)
         await ctx.send(f'I created the category **{channel}**!')
@@ -87,7 +87,7 @@ class Admin(commands.Cog, name='Administration Commands'):
     @commands.command(aliases=['et'])
     @commands.has_permissions(manage_channels=True)
     async def edittextname(self, ctx, channel: discord.TextChannel, *, name):
-        """Edits a text channel name."""
+        """Edits a text channel name"""
 
         await channel.edit(name=name)
         await ctx.send(f"I edited the text channel **{channel}**!")
@@ -95,7 +95,7 @@ class Admin(commands.Cog, name='Administration Commands'):
     @commands.command(aliases=['ev'])
     @commands.has_permissions(manage_channels=True)
     async def editvoicename(self, ctx, channel: discord.VoiceChannel, *, name):
-        """Edits a voice channel name."""
+        """Edits a voice channel name"""
 
         await channel.edit(name=name)
         await ctx.send(f"I edited the voice channel **{channel}**!")
@@ -103,7 +103,7 @@ class Admin(commands.Cog, name='Administration Commands'):
     @commands.command(aliases=['ec'])
     @commands.has_permissions(manage_channels=True)
     async def editcategoryname(self, ctx, channel: discord.CategoryChannel, *, name):
-        """Edits a category name."""
+        """Edits a category name"""
 
         await channel.edit(name=name)
         await ctx.send(f"I edited the category **{channel}**!")
@@ -111,7 +111,7 @@ class Admin(commands.Cog, name='Administration Commands'):
     @commands.command(aliases=['mt'])
     @commands.has_permissions(manage_channels=True)
     async def movetext(self, ctx, channel: discord.TextChannel, *, category: discord.CategoryChannel):
-        """Moves a text channel."""
+        """Moves a text channel"""
 
         await channel.edit(category=category)
         await ctx.send(f'I moved the text channel **{channel}**!')
@@ -119,7 +119,7 @@ class Admin(commands.Cog, name='Administration Commands'):
     @commands.command(aliases=['mv'])
     @commands.has_permissions(manage_channels=True)
     async def movevoice(self, ctx, channel: discord.VoiceChannel, *, category: discord.CategoryChannel):
-        """Moves a voice channel."""
+        """Moves a voice channel"""
 
         await channel.edit(category=category)
         await ctx.send(f'I moved the voice channel **{channel}**!')
@@ -127,7 +127,7 @@ class Admin(commands.Cog, name='Administration Commands'):
     @commands.command(aliases=['dt'])
     @commands.has_permissions(manage_channels=True)
     async def deletetext(self, ctx, channel: discord.TextChannel, *, reason=None):
-        """Deletes a text channel."""
+        """Deletes a text channel"""
         
         ctx.guild.get_channel(channel)
         
@@ -137,7 +137,7 @@ class Admin(commands.Cog, name='Administration Commands'):
     @commands.command(aliases=['dv'])
     @commands.has_permissions(manage_channels=True)
     async def deletevoice(self, ctx, channel: discord.VoiceChannel, *, reason=None):
-        """Deletes a voice channel."""
+        """Deletes a voice channel"""
         
         ctx.guild.get_channel(channel)
         
@@ -147,7 +147,7 @@ class Admin(commands.Cog, name='Administration Commands'):
     @commands.command(aliases=['dc'])
     @commands.has_permissions(manage_channels=True)
     async def deletecategory(self, ctx, channel: discord.CategoryChannel, *, reason=None):
-        """Deletes a category."""
+        """Deletes a category"""
         
         ctx.guild.get_channel(channel)
         
@@ -157,10 +157,10 @@ class Admin(commands.Cog, name='Administration Commands'):
     @commands.command(aliases=['ett'])
     @commands.has_permissions(manage_channels=True)
     async def edittexttopic(self, ctx, channel: discord.TextChannel, *, topic):
-        """Edits a text channel topic."""
+        """Edits a channel topic"""
 
         await channel.edit(topic=topic)
         await ctx.send(f"I edited the text channel **{channel.mention}**!")
 
 def setup(bot):
-    bot.add_cog(Admin(bot))
+    bot.add_cog(admin(bot))

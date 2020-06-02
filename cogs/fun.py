@@ -22,7 +22,6 @@ class Fun(commands.Cog, name='Fun Commands'):
         await ctx.send(result)
 
     @commands.command(name='8ball')
-    @commands.guild_only()
     async def _8ball(self, ctx, *, question):
         """Provides wisdom"""
 

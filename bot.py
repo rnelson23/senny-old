@@ -22,4 +22,4 @@ async def on_ready():
 
     return
 
-bot.run('NjgxODY4MzYyNTk0MTIzODA2.XmpF7Q.eFGbPRPenQf3rRQk_Zi6eCe57yc')
+bot.run('token')

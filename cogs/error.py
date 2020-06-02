@@ -19,7 +19,7 @@ class error(commands.Cog):
         else:
             await ctx.send(f'{error}')
 
-        print('Ignoring exception in command {}:'.format(ctx.command), file=sys.stderr)
+        print('\nIgnoring exception in command {}:'.format(ctx.command), file=sys.stderr)
         traceback.print_exception(type(error), error, error.__traceback__, file=sys.stderr)
 
 def setup(bot):

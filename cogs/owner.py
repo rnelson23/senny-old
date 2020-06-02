@@ -14,6 +14,7 @@ class owner(commands.Cog, name="Owner Commands"):
         await channel.send(f'{message}')
 
     @commands.command()
+    @commands.is_owner()
     async def status(self, ctx, *, msg):
         """Changes the bot status"""
 

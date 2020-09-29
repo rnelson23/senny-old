@@ -1,5 +1,5 @@
 # Senny
-Senny is a personal project of mine I started because I was bored. It just has commands I find useful.
+Senny is a personal project of mine I started because I was bored. It just has commands I find useful. This code is super outdated and I plan to rewrite the bot in Eris anyway.
 
 ## Commands
 ### Administration:

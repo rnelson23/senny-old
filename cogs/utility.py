@@ -3,15 +3,14 @@ import asyncio
 from discord.ext import commands
 from datetime import datetime as d
 
-class UtiCog(commands.Cog, name='Utillity Commands'):
+class utility(commands.Cog, name='Utillity Commands'):
 
     def __init__(self, bot):
         self.bot = bot
-        self._last_member = None
 
     @commands.command()
     async def ping(self, ctx):
-        """Check pingtime."""
+        """Checks pingtime"""
 
         start = d.timestamp(d.now())
         msg = await ctx.send(content='Pinging')
@@ -20,7 +19,7 @@ class UtiCog(commands.Cog, name='Utillity Commands'):
 
     @commands.command()
     async def temp(self, ctx, num: int, unit: str):
-        """Converts temp units."""
+        """Converts temp units"""
 
         if unit == 'F':
             resultc = round((num - 32) * (5/9))
@@ -30,17 +29,17 @@ class UtiCog(commands.Cog, name='Utillity Commands'):
             resultf = round((num * (9/5)) + 32)
             await ctx.send(f'**{num}°C** is **{resultf}°F**')
 
-    @commands.command()
+    @commands.command(aliases=['dis', 'd'])
     async def disboard(self, ctx):
-        """Reminds to bump."""
+        """Reminds to bump"""
 
         await ctx.send(f"Alright, {ctx.author.mention}, I'll remind {ctx.channel.mention} about **!d bump** in 2 hours!")
         await asyncio.sleep(7200)
         await ctx.send(f'Hey, 2 hours ago, you asked me to remind {ctx.channel.mention} about **!d bump**!')
 
-    @commands.command(aliases= ['rmd'])
-    async def remind(self, ctx, arg, time=None, *, reason=None):
-        """Reminds a user/channel."""
+    @commands.command(aliases= ['rmd', 'r'])
+    async def remind(self, ctx, place, time=None, *, reason=None):
+        """Reminds a user/channel"""
 
         converter = (time[-1])
         amount2 = (time[:-1])
@@ -80,7 +79,7 @@ class UtiCog(commands.Cog, name='Utillity Commands'):
             elif amount2 != '1':
                 duration2 = f'{amount2} days'
 
-        if arg == 'me':
+        if place == 'me':
             
             user = ctx.author
             channel2 = await user.create_dm()
@@ -89,7 +88,7 @@ class UtiCog(commands.Cog, name='Utillity Commands'):
             await asyncio.sleep(duration)
             await channel2.send(f"Hey, {duration2} ago, you asked me to remind you about **{reason}**!")
 
-        elif arg == 'here':
+        elif place == 'here':
 
             user = ctx.author
             channel = ctx.channel
@@ -97,11 +96,12 @@ class UtiCog(commands.Cog, name='Utillity Commands'):
             await ctx.send(f"Alright, {user.mention}, I'll remind {channel.mention} about **{reason}** in {duration2}!")
             await asyncio.sleep(duration)
             await channel.send(f"Hey, {duration2} ago, you asked me to remind {channel.mention} about **{reason}**!")
+            
             return
 
     @commands.command()
     async def jumbo(self, ctx, emoji: discord.PartialEmoji):
-        """Gets an emote's image."""
+        """Gets an emote"""
 
         embed = discord.Embed(color=0x3a86ff, timestamp=ctx.message.created_at)
 
@@ -113,7 +113,7 @@ class UtiCog(commands.Cog, name='Utillity Commands'):
 
     @commands.command(aliases=['av'])
     async def avatar(self, ctx, user: discord.User=None):
-        """Gets a user's avatar."""
+        """Gets an avatar"""
 
         if user is None:
             user = ctx.author
@@ -135,9 +135,9 @@ class UtiCog(commands.Cog, name='Utillity Commands'):
 
             await ctx.send(embed=embed)
 
-    @commands.command(aliases=['user'])
+    @commands.command(aliases=['info'])
     async def userinfo(self, ctx, user: discord.Member=None):
-        """Shows user info."""
+        """Shows user info"""
 
         if user is None:
             user = ctx.author
@@ -197,7 +197,7 @@ class UtiCog(commands.Cog, name='Utillity Commands'):
                             message += f"\non {activity.album}"
                         message += "\n"
                     else:
-                        message += f"• Listening to **{activity.name}**\n"
+                        message += f"Listening to **{activity.name}**\n"
 
             if user.premium_since is None:
                 booster = 'No'
@@ -307,7 +307,7 @@ class UtiCog(commands.Cog, name='Utillity Commands'):
 
     @commands.command(aliases=['server'])
     async def serverinfo(self, ctx):
-        """Shows server info."""
+        """Shows server info"""
 
         embed = discord.Embed(color = 0x3a86ff, timestamp=ctx.message.created_at)
 
@@ -328,9 +328,9 @@ class UtiCog(commands.Cog, name='Utillity Commands'):
         
         await ctx.send(embed=embed)
 
-    @commands.command()
+    @commands.command(aliases=['role'])
     async def roleinfo(self, ctx, *, role: discord.Role):
-        """Shows role info."""
+        """Shows role info"""
         
         embed = discord.Embed(color=0x3a86ff, timestamp=ctx.message.created_at)
 
@@ -352,4 +352,4 @@ class UtiCog(commands.Cog, name='Utillity Commands'):
         await ctx.send(embed=embed)
 
 def setup(bot):
-    bot.add_cog(UtiCog(bot))
+    bot.add_cog(utility(bot))
